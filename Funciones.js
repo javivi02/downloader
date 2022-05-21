@@ -28,7 +28,7 @@ export const confirmarPregunta = async( message ) => {
         {
             type: 'confirm',
             name: 'porcion',
-            message: 'Quieres partir el video ¿?',
+            message: message,
             default: false,
         }
     ];
@@ -66,7 +66,7 @@ export const descargaYouTube = (link, opcion)=> {
 
     return new Promise((resolve, reject) => {
 
-        const child = exec(`yt-dlp -f ${opcion} ${link} -o "~/Downloads/%(title)s.%(ext)s"`,
+        const child = exec(`yt-dlp -f ${opcion} -o "~/Downloads/%(title)s.%(ext)s" ${link} --restrict-filenames`,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
                 stderr: stderr
@@ -111,6 +111,50 @@ export const mostrarFormatos = (link)=> {
     return new Promise((resolve, reject) => {
 
         const child = exec(`yt-dlp -F ${link}`,
+            (err, stdout, stderr) => err ? reject(err) : resolve({
+                stdout: stdout,
+                stderr: stderr
+            }));
+
+        if (child.stdout) {
+            child.stdout.pipe(process.stdout);
+        }
+
+        if (child.stderr) {
+            child.stderr.pipe(process.stderr);
+        }
+    });
+}
+
+export const capturarNombreDescarga = (link)=> {
+
+    return new Promise((resolve, reject) => {
+
+        const child = exec(`yt-dlp --get-filename -o "%(title)s.%(ext)s" ${link} --restrict-filenames`,
+            (err, stdout, stderr) => err ? reject(err) : resolve({
+                stdout: stdout,
+                stderr: stderr
+            }));
+
+        if (child.stdout) {
+            child.stdout.pipe(process.stdout);
+        }
+
+        if (child.stderr) {
+            child.stderr.pipe(process.stderr);
+        }
+    });
+}
+
+export const convertirMp3 = (nombre)=> {
+
+    const temp = nombre.toString();
+
+    console.log(`ffmpeg -i '/Users/jga/Downloads//${temp}' '/Users/jga/Downloads/${temp}.mp3'`);
+
+    return new Promise((resolve, reject) => {
+
+        const child = exec(`ffmpeg -i '/Users/jga/Downloads//${temp}' '/Users/jga/Downloads/${temp}.mp3'`,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
                 stderr: stderr

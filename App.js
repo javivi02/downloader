@@ -1,13 +1,15 @@
 import 'colors';
 import {inquirerMenu} from "./Menu.js";
 import {
+    capturarNombreDescarga,
     confirmarPregunta,
     descargaYouTube,
     descargaYouTubePorcion,
     leerInput,
     mostrarFormatos,
     pausa,
-    pausaMensaje
+    pausaMensaje,
+    convertirMp3
 } from "./Funciones.js";
 
 const main = async () => {
@@ -36,7 +38,7 @@ const main = async () => {
 
                 const formato = await leerInput('Introduce el numero del formato que quieres descargar: ');
 
-                const partirContenido = await confirmarPregunta();
+                const partirContenido = await confirmarPregunta('Quieres partir el video ¿?');
 
                 if (partirContenido){
 
@@ -46,15 +48,27 @@ const main = async () => {
                         .then(() => pausaMensaje('Descarga realizada !!!'))
                         .catch(() => pausaMensaje('Error en la descarga !!!'));
 
-                }else{
+                } else{
                     await descargaYouTube(link, formato)
                         .then(() => pausaMensaje('Descarga realizada !!!'))
                         .catch(() => pausaMensaje('Error en la descarga !!!'));
                 }
+
+                const conversion = await confirmarPregunta('Quieres convertirlo en MP3 ¿?');
+
+                if (conversion){
+
+                    const nombreArchivo = await capturarNombreDescarga(link);
+                    await convertirMp3(nombreArchivo)
+                        .then(() => pausaMensaje('Archivo convertido !!!'))
+                        .catch(() => pausaMensaje('Error al realizar la conversion !!!'));
+
+                }
+
                 break;
 
             case '2':
-                const answer = await confirmarPregunta();
+                const answer = await confirmarPregunta('Quieres partir el video ¿?');
                 console.log({answer})
                 await pausa();
                 break;
