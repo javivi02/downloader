@@ -29,7 +29,7 @@ export const inquirerMenu = async() => {
 
     console.clear();
     console.log('=========================='.green);
-    console.log('  Seleccione una opción'.white );
+    console.log('  Estherin Seleccione una opción'.white );
     console.log('==========================\n'.green);
 
     const { opcion } = await inquirer.prompt(preguntas);

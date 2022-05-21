@@ -39,8 +39,9 @@ const main = async () => {
                 const partirContenido = await confirmarPregunta();
 
                 if (partirContenido){
+
                     const tiempo1 = await leerInput('Introducir tiempo inicio, ejemplo (00:00:10.00): ');
-                    const tiempo2 = await leerInput('Introducir tiempo inicio, ejemplo (00:00:10.00): ');
+                    const tiempo2 = await leerInput('Introducir tiempo final, ejemplo (00:00:10.00): ');
                     await descargaYouTubePorcion(link, formato, tiempo1, tiempo2)
                         .then(() => pausaMensaje('Descarga realizada !!!'))
                         .catch(() => pausaMensaje('Error en la descarga !!!'));
@@ -63,8 +64,6 @@ const main = async () => {
                 break;
 
         }
-
-        //await pausa();
 
     }while (opcion !== '0')
 

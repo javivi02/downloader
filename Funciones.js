@@ -34,8 +34,6 @@ export const confirmarPregunta = async( message ) => {
     ];
 
     const { porcion } = await inquirer.prompt(question);
-
-    console.log({porcion})
     return porcion;
 
 }
@@ -88,10 +86,9 @@ export const descargaYouTubePorcion = (link, opcion, tiempo1, tiempo2)=> {
 
     return new Promise((resolve, reject) => {
 
-        const comando = `yt-dlp 
-            -f ${opcion} ${link}
-            --external-downloader ffmpeg --external-downloader-args "-ss ${tiempo1} -to ${tiempo2}
-            -o "~/Downloads/%(title)s.%(ext)s"`
+        const comando = `yt-dlp -f ${opcion} ${link} --external-downloader ffmpeg --external-downloader-args "-ss ${tiempo1} -to ${tiempo2}" -o "~/Downloads/%(title)s.%(ext)s"`
+
+        console.log(comando);
 
         const child = exec(comando,
             (err, stdout, stderr) => err ? reject(err) : resolve({
