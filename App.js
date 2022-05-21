@@ -1,6 +1,14 @@
 import 'colors';
 import {inquirerMenu} from "./Menu.js";
-import {descargaYouTube, leerInput, mostrarFormatos, pausa} from "./Funciones.js";
+import {
+    confirmarPregunta,
+    descargaYouTube,
+    descargaYouTubePorcion,
+    leerInput,
+    mostrarFormatos,
+    pausa,
+    pausaMensaje
+} from "./Funciones.js";
 
 const main = async () => {
 
@@ -12,25 +20,46 @@ const main = async () => {
         opcion = await inquirerMenu();
 
         switch (opcion) {
+
             case '1':
                 const link = await leerInput('Enlace de YouTube: ');
 
-                await mostrarFormatos(link);
+                const enlaceValido = await mostrarFormatos(link)
+                    .catch(()=>{
+                        console.log('‼️  Enlace no valido'.red.bold)
+                    });
+
+                if (enlaceValido === undefined) {
+                    await pausa();
+                    break;
+                }
 
                 const formato = await leerInput('Introduce el numero del formato que quieres descargar: ');
 
-                await descargaYouTube(link, formato)
-                    .then(() => pausa('Descarga realizada !!!'))
-                    .catch(() => pausa('Error en la descarga !!!'));
+                const partirContenido = await confirmarPregunta();
 
+                if (partirContenido){
+                    const tiempo1 = await leerInput('Introducir tiempo inicio, ejemplo (00:00:10.00): ');
+                    const tiempo2 = await leerInput('Introducir tiempo inicio, ejemplo (00:00:10.00): ');
+                    await descargaYouTubePorcion(link, formato, tiempo1, tiempo2)
+                        .then(() => pausaMensaje('Descarga realizada !!!'))
+                        .catch(() => pausaMensaje('Error en la descarga !!!'));
+
+                }else{
+                    await descargaYouTube(link, formato)
+                        .then(() => pausaMensaje('Descarga realizada !!!'))
+                        .catch(() => pausaMensaje('Error en la descarga !!!'));
+                }
                 break;
 
             case '2':
-                console.log('opcion 2')
+                const answer = await confirmarPregunta();
+                console.log({answer})
+                await pausa();
                 break;
 
             case '0':
-                console.log('Saliendo de la aplicacion');
+                await pausaMensaje('Saliendo de la aplicacion.');
                 break;
 
         }
@@ -42,3 +71,5 @@ const main = async () => {
 }
 
 main().then();
+
+// https://youtu.be/jSQYTt4xg3I

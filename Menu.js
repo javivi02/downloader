@@ -12,6 +12,10 @@ const preguntas = [
                 name: `${ '1.'.green } Descargar contenido de YouTube`
             },
             {
+                value: '2',
+                name: `${ '2.'.green } Prueba`
+            },
+            {
                 value: '0',
                 name: `${ '0.'.green } Salir`
             },
