@@ -166,11 +166,11 @@ export const descargaYouTubeMp3 = (link) => {
 }
 
 
-export const descargaYouTubeMp3Porcion = (link) => {
+export const descargaYouTubeMp3Porcion = (link, tiempo1, tiempo2) => {
 
     return new Promise((resolve, reject) => {
 
-        const comando = `yt-dlp --external-downloader ffmpeg --external-downloader-args "-ss 00:00:10.00 -to 00:00:30.00" --prefer-ffmpeg --extract-audio --audio-format mp3 --audio-quality 0 ${link} -o "~/Downloads/%(title)s.%(ext)s"`;
+        const comando = `yt-dlp --external-downloader ffmpeg --external-downloader-args "-ss ${tiempo1} -to ${tiempo2}" --prefer-ffmpeg --extract-audio --audio-format mp3 --audio-quality 0 ${link} -o "~/Downloads/%(title)s.%(ext)s"`;
         const child = exec(comando,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
