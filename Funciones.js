@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import {exec} from "child_process";
+import {exec, execFile} from "child_process";
 
 export const leerInput = async( message ) => {
 
@@ -127,7 +127,65 @@ export const mostrarFormatos = (link)=> {
     });
 }
 
-export const capturarNombreDescarga = (link)=> {
+export const descargaYouTubeMp3 = (link)=> {
+
+    return new Promise((resolve, reject) => {
+
+        const comando = `yt-dlp 
+                        --prefer-ffmpeg 
+                        --extract-audio --audio-format mp3 --audio-quality 0 
+                        --embed-thumbnail 
+                        ${link} 
+                        -o "~/Downloads/%(title)s.%(ext)s"`;
+
+        const child = exec(comando,
+            (err, stdout, stderr) => err ? reject(err) : resolve({
+                stdout: stdout,
+                stderr: stderr
+            }));
+
+        if (child.stdout) {
+            child.stdout.pipe(process.stdout);
+        }
+
+        if (child.stderr) {
+            child.stderr.pipe(process.stderr);
+        }
+    });
+}
+
+
+export const descargaYouTubeMp3Porcion = (link)=> {
+
+    return new Promise((resolve, reject) => {
+
+        const comando = `yt-dlp 
+                        --external-downloader ffmpeg 
+                        --external-downloader-args "-ss 00:00:10.00 -to 00:00:30.00" 
+                        --prefer-ffmpeg 
+                        --extract-audio --audio-format mp3 --audio-quality 0  
+                        ${link} 
+                        -o "~/Downloads/%(title)s.%(ext)s"`;
+        const child = exec(comando,
+            (err, stdout, stderr) => err ? reject(err) : resolve({
+                stdout: stdout,
+                stderr: stderr
+            }));
+
+        if (child.stdout) {
+            child.stdout.pipe(process.stdout);
+        }
+
+        if (child.stderr) {
+            child.stderr.pipe(process.stderr);
+        }
+    });
+}
+
+
+
+
+/*export const capturarNombreDescarga = (link)=> {
 
     return new Promise((resolve, reject) => {
 
@@ -145,21 +203,29 @@ export const capturarNombreDescarga = (link)=> {
             child.stderr.pipe(process.stderr);
         }
     });
-}
+}*/
 
+/*
 export const convertirMp3 = (nombre)=> {
+
+    const argumento1 = nombre.toString().trim();
+    const argumento2 = nombre.toString().trim();
 
     return new Promise((resolve, reject) => {
 
-        // const child = exec(`"ffmpeg -i ~/Downloads/${nombre} ~/Downloads/${nombre}.mp3"`,
-        const child = exec(`"ffmpeg -i ~/Downloads/${nombre} ~/Downloads/${nombre}.mp3"`,
+        // const comando = `./argumentos.sh ~/Downloads/${nombre} ~/Downloads/${nombre}`
+        // const comando = `./argumentos.sh ~/Downloads/Chanel_-_SloMo_-_LIVE_-_Spain_-_Grand_Final_-_Eurovision_2022 ~/Downloads/Chanel_-_SloMo_-_LIVE_-_Spain_-_Grand_Final_-_Eurovision_2022.mp3`
+        // const child = exec("./argumentos.sh ~//Downloads//" + nombre + "~//Downloads//" + nombre + ".mp3",
+        const child = execFile('./argumentos.sh', [argumento1, argumento2],
+        // const child = exec(comando,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
                 stderr: stderr
             }));
 
         if (child.stdout) {
-            console.log(`ffmpeg -i ~/Downloads/${nombre} ~/Downloads/${nombre}.mp3`);
+            console.log(argumento1);
+            console.log(argumento2);
             child.stdout.pipe(process.stdout);
         }
 
@@ -167,4 +233,4 @@ export const convertirMp3 = (nombre)=> {
             child.stderr.pipe(process.stderr);
         }
     });
-}
+}*/
