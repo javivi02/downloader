@@ -1,7 +1,6 @@
 import 'colors';
 import {inquirerMenu} from "./Menu.js";
 import {
-    capturarNombreDescarga,
     confirmarPregunta,
     descargaYouTube,
     descargaYouTubePorcion,
@@ -9,7 +8,8 @@ import {
     mostrarFormatos,
     pausa,
     pausaMensaje,
-    convertirMp3, descargaYouTubeMp3Porcion, descargaYouTubeMp3
+    descargaYouTubeMp3Porcion,
+    descargaYouTubeMp3, validarEnlace
 } from "./Funciones.js";
 
 const main = async () => {
@@ -70,7 +70,7 @@ const main = async () => {
             case '2':
                 const link2 = await leerInput('Copia aqui el enlace de YouTube: ');
 
-                const enlaceValido2 = await mostrarFormatos(link2)
+                const enlaceValido2 = await validarEnlace(link2)
                     .catch(()=>{
                         console.log('‼️  Enlace no valido'.red.bold)
                     });
@@ -80,7 +80,7 @@ const main = async () => {
                     break;
                 }
 
-                const partirContenido2 = await confirmarPregunta('Quieres extraer una parte del contenido ¿?');
+                const partirContenido2 = await confirmarPregunta('Quieres extraer una parte del audio ¿?');
 
                 if (partirContenido2){
 

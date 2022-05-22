@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import {exec, execFile} from "child_process";
+import {exec} from "child_process";
 
 export const leerInput = async( message ) => {
 
@@ -127,16 +127,27 @@ export const mostrarFormatos = (link)=> {
     });
 }
 
+export const validarEnlace = (link)=> {
+
+    return new Promise((resolve, reject) => {
+
+        const child = exec(`yt-dlp -F ${link}`,
+            (err, stdout, stderr) => err ? reject(err) : resolve({
+                stdout: stdout,
+                stderr: stderr
+            }));
+
+        if (child.stderr) {
+            child.stderr.pipe(process.stderr);
+        }
+    });
+}
+
 export const descargaYouTubeMp3 = (link)=> {
 
     return new Promise((resolve, reject) => {
 
-        const comando = `yt-dlp 
-                        --prefer-ffmpeg 
-                        --extract-audio --audio-format mp3 --audio-quality 0 
-                        --embed-thumbnail 
-                        ${link} 
-                        -o "~/Downloads/%(title)s.%(ext)s"`;
+        const comando = `yt-dlp --prefer-ffmpeg --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail ${link} -o "~/Downloads/%(title)s.%(ext)s"`;
 
         const child = exec(comando,
             (err, stdout, stderr) => err ? reject(err) : resolve({
@@ -159,13 +170,7 @@ export const descargaYouTubeMp3Porcion = (link)=> {
 
     return new Promise((resolve, reject) => {
 
-        const comando = `yt-dlp 
-                        --external-downloader ffmpeg 
-                        --external-downloader-args "-ss 00:00:10.00 -to 00:00:30.00" 
-                        --prefer-ffmpeg 
-                        --extract-audio --audio-format mp3 --audio-quality 0  
-                        ${link} 
-                        -o "~/Downloads/%(title)s.%(ext)s"`;
+        const comando = `yt-dlp --external-downloader ffmpeg --external-downloader-args "-ss 00:00:10.00 -to 00:00:30.00" --prefer-ffmpeg --extract-audio --audio-format mp3 --audio-quality 0 ${link} -o "~/Downloads/%(title)s.%(ext)s"`;
         const child = exec(comando,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
