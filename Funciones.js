@@ -67,7 +67,7 @@ export const descargaYouTube = (link, opcion) => {
     return new Promise((resolve, reject) => {
 
         // const child = exec(`yt-dlp -f ${opcion} -o "~/Downloads/%(title)s.%(ext)s" ${link} --restrict-filenames`,
-        const child = exec(`yt-dlp -f ${opcion} -o "~/Downloads/%(title)s" ${link} --restrict-filenames`,
+        const child = exec(`yt-dlp -f ${opcion} -o "~/Downloads/%(title)s.%(ext)s" ${link} --restrict-filenames`,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
                 stderr: stderr
