@@ -27,7 +27,7 @@ const main = async () => {
                 const link = await leerInput('Copia aqui el enlace de YouTube: ');
 
                 const enlaceValido = await mostrarFormatos(link)
-                    .catch(()=>{
+                    .catch(() => {
                         console.log('‼️  Enlace no valido'.red.bold)
                     });
 
@@ -41,7 +41,7 @@ const main = async () => {
 
                 const partirContenido = await confirmarPregunta('Quieres extraer una parte del contenido ¿?');
 
-                if (partirContenido){
+                if (partirContenido) {
 
                     const tiempo1 = await leerInput('Introducir tiempo inicio, ejemplo (00:00:10.00): ');
                     const tiempo2 = await leerInput('Introducir tiempo final, ejemplo (00:00:10.00): ');
@@ -49,21 +49,11 @@ const main = async () => {
                         .then(() => pausaMensaje('Descarga realizada !!!'))
                         .catch(() => pausaMensaje('Error en la descarga !!!'));
 
-                } else{
+                } else {
                     await descargaYouTube(link, formato)
                         .then(() => pausaMensaje('Descarga realizada !!!'))
                         .catch(() => pausaMensaje('Error en la descarga !!!'));
                 }
-
-                /*const conversion = await confirmarPregunta('Quieres convertirlo en MP3 ¿?');
-
-                if (conversion){
-
-                    const nombre = await capturarNombreDescarga(link);
-                    await convertirMp3(nombre.stdout)
-                        .then(() => pausaMensaje('Archivo convertido !!!'))
-                        .catch(() => pausaMensaje('Error al realizar la conversion !!!'));
-                }*/
 
                 break;
 
@@ -71,7 +61,7 @@ const main = async () => {
                 const link2 = await leerInput('Copia aqui el enlace de YouTube: ');
 
                 const enlaceValido2 = await validarEnlace(link2)
-                    .catch(()=>{
+                    .catch(() => {
                         console.log('‼️  Enlace no valido'.red.bold)
                     });
 
@@ -82,14 +72,14 @@ const main = async () => {
 
                 const partirContenido2 = await confirmarPregunta('Quieres extraer una parte del audio ¿?');
 
-                if (partirContenido2){
+                if (partirContenido2) {
 
                     const tiempo1 = await leerInput('Introducir tiempo inicio, ejemplo (00:00:10.00): ');
                     const tiempo2 = await leerInput('Introducir tiempo final, ejemplo (00:00:10.00): ');
                     await descargaYouTubeMp3Porcion(link2, tiempo1, tiempo2)
                         .then(() => pausaMensaje('Descarga realizada !!!'))
                         .catch(() => pausaMensaje('Error en la descarga !!!'));
-                } else{
+                } else {
                     await descargaYouTubeMp3(link2)
                         .then(() => pausaMensaje('Descarga realizada !!!'))
                         .catch(() => pausaMensaje('Error en la descarga !!!'));
@@ -103,7 +93,7 @@ const main = async () => {
 
         }
 
-    }while (opcion !== '0')
+    } while (opcion !== '0')
 
 }
 
