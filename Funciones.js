@@ -66,7 +66,8 @@ export const descargaYouTube = (link, opcion)=> {
 
     return new Promise((resolve, reject) => {
 
-        const child = exec(`yt-dlp -f ${opcion} -o "~/Downloads/%(title)s.%(ext)s" ${link} --restrict-filenames`,
+        // const child = exec(`yt-dlp -f ${opcion} -o "~/Downloads/%(title)s.%(ext)s" ${link} --restrict-filenames`,
+        const child = exec(`yt-dlp -f ${opcion} -o "~/Downloads/%(title)s" ${link} --restrict-filenames`,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
                 stderr: stderr
@@ -130,7 +131,7 @@ export const capturarNombreDescarga = (link)=> {
 
     return new Promise((resolve, reject) => {
 
-        const child = exec(`yt-dlp --get-filename -o "%(title)s.%(ext)s" ${link} --restrict-filenames`,
+        const child = exec(`yt-dlp --get-filename -o "%(title)s" ${link} --restrict-filenames`,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
                 stderr: stderr
@@ -148,19 +149,17 @@ export const capturarNombreDescarga = (link)=> {
 
 export const convertirMp3 = (nombre)=> {
 
-    const temp = nombre.toString();
-
-    console.log(`ffmpeg -i '/Users/jga/Downloads//${temp}' '/Users/jga/Downloads/${temp}.mp3'`);
-
     return new Promise((resolve, reject) => {
 
-        const child = exec(`ffmpeg -i '/Users/jga/Downloads//${temp}' '/Users/jga/Downloads/${temp}.mp3'`,
+        // const child = exec(`"ffmpeg -i ~/Downloads/${nombre} ~/Downloads/${nombre}.mp3"`,
+        const child = exec(`"ffmpeg -i ~/Downloads/${nombre} ~/Downloads/${nombre}.mp3"`,
             (err, stdout, stderr) => err ? reject(err) : resolve({
                 stdout: stdout,
                 stderr: stderr
             }));
 
         if (child.stdout) {
+            console.log(`ffmpeg -i ~/Downloads/${nombre} ~/Downloads/${nombre}.mp3`);
             child.stdout.pipe(process.stdout);
         }
 

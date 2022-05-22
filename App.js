@@ -38,7 +38,7 @@ const main = async () => {
 
                 const formato = await leerInput('Introduce el numero del formato que quieres descargar: ');
 
-                const partirContenido = await confirmarPregunta('Quieres partir el video ¿?');
+                const partirContenido = await confirmarPregunta('Quieres extraer una parte del contenido ¿?');
 
                 if (partirContenido){
 
@@ -58,11 +58,10 @@ const main = async () => {
 
                 if (conversion){
 
-                    const nombreArchivo = await capturarNombreDescarga(link);
-                    await convertirMp3(nombreArchivo)
+                    const nombre = await capturarNombreDescarga(link);
+                    await convertirMp3(nombre.stdout)
                         .then(() => pausaMensaje('Archivo convertido !!!'))
                         .catch(() => pausaMensaje('Error al realizar la conversion !!!'));
-
                 }
 
                 break;
