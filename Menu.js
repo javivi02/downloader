@@ -5,7 +5,7 @@ const preguntas = [
     {
         type: 'list',
         name: 'opcion',
-        message: '¿Qué desea hacer?',
+        message: '¿Qué deseas hacer?',
         choices: [
             {
                 value: '1',
@@ -29,7 +29,7 @@ export const inquirerMenu = async () => {
 
     console.clear();
     console.log('=================================='.green);
-    console.log('  Estherin selecciona una opción'.white);
+    console.log('  Selecciona una opción'.white);
     console.log('==================================\n'.green);
 
     const {opcion} = await inquirer.prompt(preguntas);
