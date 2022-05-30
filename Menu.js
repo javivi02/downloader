@@ -9,11 +9,15 @@ const preguntas = [
         choices: [
             {
                 value: '1',
-                name: `${'1.'.green} Descargar contenido de YouTube seleccionando calidad y tipo de archivo`
+                name: `${'1.'.green} Descargar contenido seleccionando calidad y tipo de archivo`
             },
             {
                 value: '2',
                 name: `${'2.'.green} Descargar contenido en mp3`
+            },
+            {
+                value: '3',
+                name: `${'3.'.green} Sitios disponibles de descarga`
             },
             {
                 value: '0',

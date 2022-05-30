@@ -11,6 +11,7 @@ import {
     descargaYouTubeMp3Porcion,
     descargaYouTubeMp3, validarEnlace
 } from "./Funciones.js";
+import {listadoSitios} from "./Scraping.js";
 
 const main = async () => {
 
@@ -86,6 +87,13 @@ const main = async () => {
                 }
 
                 break;
+
+            case '3':
+                console.log('Los sitios disponibles son: ...'.green.bold);
+                await listadoSitios().then(texto => console.log(texto));
+                await pausa();
+                break;
+
 
             case '0':
                 await pausaMensaje('Saliendo de la aplicacion.');
