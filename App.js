@@ -97,6 +97,7 @@ const main = async () => {
 
             case '0':
                 await pausaMensaje('Saliendo de la aplicacion.');
+                console.clear();
                 break;
 
         }
