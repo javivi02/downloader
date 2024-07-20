@@ -6,7 +6,7 @@ export const listadoSitios = async () => {
   const page = await context.newPage();
   await page.goto('https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md');
   const text = await page.$eval('article', e => e.textContent);
-  // console.log('Listado sitios soportados por yt-dlp');
+  // console.log('Listado sitios soportados por yt-dlp actualmente');
   await browser.close();
   return text;
 }
