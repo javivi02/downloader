@@ -16,10 +16,6 @@ const preguntas = [
         name: `${'2.'.green} Descargar contenido en mp3`
       },
       {
-        value: '3',
-        name: `${'3.'.green} Sitios disponibles de descarga`
-      },
-      {
         value: '0',
         name: `${'0.'.green} Salir`
       },
